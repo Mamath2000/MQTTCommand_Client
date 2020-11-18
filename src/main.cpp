@@ -45,6 +45,9 @@ PubSubClient mqttClient(espClient);
 DynamicJsonDocument jsonDoc(1024);
 char data[80];
 
+
+
+
 void setup_wifi() {
   blink();
   blink();
@@ -172,7 +175,8 @@ if (!mqttClient.connected())     reconnect();
   
   //serializeJson(jsonDoc, payload); 
 int bt1 = 0; if (values.btn1) bt1 = 0;
-long servoVal1 = map(values.x1, 0 , 1023, 0, 180);
+long servoVal1 = map(constrain(values.x1,12,900), 12 , 900, 0, 9)*20;
+//long servoVal1 = map(values.x1, 0 , 1023, 0, 18)*10;
   String pload = "\"x1\": " + String(servoVal1) ;
   pload  = pload + ", \"y1\": " + String(values.y1) ;
   pload  = pload + ", \"btn1\": " + bt1;
@@ -206,7 +210,7 @@ void blink() {
 int readAnalogValue(int pin) {
   digitalWrite(pin, HIGH);
   int a = analogRead(A0);
-  delay(5);
+  //wait(5);
   digitalWrite(pin, LOW);
   return a;
 }
